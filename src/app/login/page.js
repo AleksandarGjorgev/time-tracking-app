@@ -30,6 +30,13 @@ export default function LoginPage() {
   const [error, setError] = useState(null); // Napake
   const router = useRouter();
 
+  // Preverjanje, če je uporabnik že prijavljen (ob nalaganju strani)
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/'); // Preusmeri na nadzorno ploščo, če je uporabnik že prijavljen
+    }
+  }, [router]);
 
   // Ob prijavi ali registraciji
   const handleSubmit = async (e) => {
@@ -65,7 +72,6 @@ export default function LoginPage() {
 
       const data = await response.json();
       localStorage.setItem('token', data.token); // Shrani žeton v lokalno shrambo
-      console.log(data.token);
       router.push('/'); // Po uspešni prijavi preusmeri uporabnika na nadzorno ploščo
     } catch (err) {
       setError('Prišlo je do napake. Poskusite znova.');

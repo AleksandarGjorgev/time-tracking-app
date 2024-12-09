@@ -40,7 +40,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const checkToken = () => {
-      const token = localStorage.getItem("jwt"); // Preveri, če obstaja JWT v localStorage
+      const token = localStorage.getItem("token"); // Preveri, če obstaja JWT v localStorage
       if (!token) {
         router.push("/login"); // Preusmeri na /login, če ni žetona
       }
@@ -102,7 +102,6 @@ export default function Dashboard() {
     try {
       const response = await updateWorkLog(updatedLog.id, updatedLog);
       if (response.success) {
-        alert("Work log successfully updated!");
         fetchWorkLogs(); // Refresh logs after update
       } else {
         alert(`Failed to update work log: ${response.message || "Unknown error"}`);
@@ -117,7 +116,6 @@ export default function Dashboard() {
     try {
       const response = await deleteWorkLog(logId);
       if (response.success) {
-        alert("Work log successfully deleted!");
         fetchWorkLogs(); // Refresh logs after deletion
       } else {
         alert(`Failed to delete work log: ${response.message || "Unknown error"}`);
@@ -137,7 +135,6 @@ export default function Dashboard() {
       const workLogWithUserId = { ...newWorkLog, userId };
       const response = await createWorkLog(workLogWithUserId);
       if (response.success) {
-        alert("Work log successfully added!");
         fetchWorkLogs();
         setNewWorkLog({ startTime: "", endTime: "", breakStart: "", breakEnd: "", date: "" });
       } else {

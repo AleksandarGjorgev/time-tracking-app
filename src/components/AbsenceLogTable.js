@@ -96,10 +96,10 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
                       className="border p-2 rounded w-full"
                     >
                       <option value="">Izberi vrsto</option>
-                      <option value="sick">Bolniška</option>
-                      <option value="vacation">Dopust</option>
-                      <option value="unpaid">Neplačan dopust</option>
-                      <option value="childcare">Varstvo otrok</option>
+                      <option value="Bolniška">Bolniška</option>
+                      <option value="Dopust">Dopust</option>
+                      <option value="Neplačan dopust">Neplačan dopust</option>
+                      <option value="Varstvo otrok">Varstvo otrok</option>
                     </select>
                   </div>
                   <div>

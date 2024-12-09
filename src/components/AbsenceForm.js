@@ -82,7 +82,7 @@ const AbsenceForm = ({ absenceData, setAbsenceData, handleSaveAbsence }) => {
       </div>
 
       {/* Mreža dni */}
-      <div className="grid grid-cols-7 gap-4 mb-6">
+      <div className="grid grid-cols-7 gap-2 mb-6">
         {weekDates.map((date, idx) => {
           const day = getFormattedDate(date);
           const dateStr = getDate(date);
@@ -97,8 +97,8 @@ const AbsenceForm = ({ absenceData, setAbsenceData, handleSaveAbsence }) => {
               }`}
               onClick={() => handleDayClick(day, date)}
             >
-              <div className="text-lg font-semibold">{day}</div>
-              <div className="text-sm text-gray-500">{dateStr}</div>
+              <div className="hidden md:block text-lg font-semibold">{day}</div>
+              <div className="text-base md:text-sm text-gray-500">{dateStr}</div>
             </div>
           );
         })}
@@ -120,10 +120,10 @@ const AbsenceForm = ({ absenceData, setAbsenceData, handleSaveAbsence }) => {
             <option value="" disabled>
               Izberi vrsto odsotnosti
             </option>
-            <option value="bolniska">Bolniška</option>
-            <option value="dopust">Dopust</option>
-            <option value="neplacan dopust">Neplačan dopust</option>
-            <option value="varstvo otrok">Varstvo otrok</option>
+            <option value="Bolniška">Bolniška</option>
+            <option value="Dopust">Dopust</option>
+            <option value="Neplačan dopust">Neplačan dopust</option>
+            <option value="Varstvo otrok">Varstvo otrok</option>
           </select>
 
           <label className="block text-sm font-medium mt-4 mb-2">Opis (neobvezno)</label>

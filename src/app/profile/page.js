@@ -88,7 +88,6 @@ export default function Profile() {
 
   const handleAccountSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting formData:", formData); // Add this line
   
     try {
       setLoading(true);

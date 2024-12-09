@@ -15,7 +15,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-6">
         <h1
           className="text-2xl font-bold cursor-pointer transition duration-300 ease-in-out hover:text-yellow-300"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/")}
         >
           TimeTracker
         </h1>

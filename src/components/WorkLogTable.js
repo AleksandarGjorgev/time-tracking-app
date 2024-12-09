@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 
 const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
-  const [editingLog, setEditingLog] = useState(null); // Trenutno urejan zapis
-  const [editedLog, setEditedLog] = useState({}); // Kopija urejenega zapisa
+  const [editingLog, setEditingLog] = useState(null);
+  const [editedLog, setEditedLog] = useState({});
 
   const sortedWorkLogs = [...workLogs].sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -22,11 +22,11 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
 
   const handleEditSubmit = () => {
     onEdit(editedLog);
-    setEditingLog(null); // Skrij obrazec
+    setEditingLog(null);
   };
 
   const handleCancelEdit = () => {
-    setEditingLog(null); // Skrij obrazec brez shranjevanja
+    setEditingLog(null);
   };
 
   const handleExportToExcel = () => {
@@ -40,37 +40,6 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
     }));
 
     const ws = XLSX.utils.json_to_sheet(formattedLogs);
-    
-    // Apply styles to header
-    const headerCellStyle = {
-      font: { bold: true },
-      fill: { fgColor: { rgb: "FFFF00" } }, // Yellow background
-      alignment: { horizontal: "center", vertical: "center" },
-      border: { top: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" }, bottom: { style: "thin" } }
-    };
-    
-    // Style each header cell
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let col = range.s.c; col <= range.e.c; col++) {
-      const cellAddress = { r: range.s.r, c: col };
-      const cell = ws[XLSX.utils.encode_cell(cellAddress)];
-      if (cell) {
-        cell.s = headerCellStyle;
-      }
-    }
-
-    // Apply border to all cells
-    for (let row = range.s.r + 1; row <= range.e.r; row++) {
-      for (let col = range.s.c; col <= range.e.c; col++) {
-        const cellAddress = { r: row, c: col };
-        const cell = ws[XLSX.utils.encode_cell(cellAddress)];
-        if (cell) {
-          cell.s = {
-            border: { top: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" }, bottom: { style: "thin" } }
-          };
-        }
-      }
-    }
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Work Logs');
@@ -82,7 +51,6 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-center mb-4">Tvoji delovni zapisi</h2>
 
-      {/* Export button */}
       <div className="text-center mb-4">
         <button
           onClick={handleExportToExcel}
@@ -106,8 +74,8 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
             <div key={log.id} className="bg-white shadow-lg rounded-lg p-4 space-y-4 hover:bg-gray-50 transition duration-300 ease-in-out">
               {isEditing ? (
                 <div className="space-y-4">
-                  <div className="flex space-x-4">
-                    <label className="flex-1">
+                  <div className="flex flex-wrap gap-4">
+                    <label className="flex-1 min-w-[120px]">
                       <span className="text-sm text-gray-600">Prihod:</span>
                       <input
                         type="time"
@@ -117,7 +85,7 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                         className="border p-2 rounded w-full"
                       />
                     </label>
-                    <label className="flex-1">
+                    <label className="flex-1 min-w-[120px]">
                       <span className="text-sm text-gray-600">Odhod:</span>
                       <input
                         type="time"
@@ -128,8 +96,8 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                       />
                     </label>
                   </div>
-                  <div className="flex space-x-4">
-                    <label className="flex-1">
+                  <div className="flex flex-wrap gap-4">
+                    <label className="flex-1 min-w-[120px]">
                       <span className="text-sm text-gray-600">Začetek malice:</span>
                       <input
                         type="time"
@@ -139,7 +107,7 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                         className="border p-2 rounded w-full"
                       />
                     </label>
-                    <label className="flex-1">
+                    <label className="flex-1 min-w-[120px]">
                       <span className="text-sm text-gray-600">Konec malice:</span>
                       <input
                         type="time"
@@ -150,7 +118,7 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                       />
                     </label>
                   </div>
-                  <div className="flex justify-end space-x-2">
+                  <div className="flex flex-wrap justify-end gap-2">
                     <button
                       onClick={handleCancelEdit}
                       className="px-4 py-2 bg-gray-500 text-white rounded-full text-sm hover:bg-gray-600 transition duration-300"
@@ -166,8 +134,8 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
-                  <div>
+                <div className="flex flex-wrap gap-4 items-start md:items-center">
+                  <div className="flex-1 min-w-[200px]">
                     <span className="text-lg font-semibold">{formattedDate}</span>
                     <p className="text-sm text-gray-500">
                       Prihod: {formattedStartTime} | Odhod: {formattedEndTime}
@@ -179,7 +147,7 @@ const WorkLogTable = ({ workLogs, calculateHours, onEdit, onDelete }) => {
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex gap-2 flex-wrap">
                     <span className="font-semibold">{workHours}</span>
                     <button
                       onClick={() => handleEditClick(log)}

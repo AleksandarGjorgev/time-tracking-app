@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
 const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
-  const [editingLog, setEditingLog] = useState(null); // Currently editing record
-  const [editedLog, setEditedLog] = useState({}); // Copy of the record being edited
+  const [editingLog, setEditingLog] = useState(null);
+  const [editedLog, setEditedLog] = useState({});
 
   const sortedAbsenceLogs = [...absenceLogs].sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -27,11 +27,11 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
     }
 
     onEdit(editedLog);
-    setEditingLog(null); // Hide the form
+    setEditingLog(null);
   };
 
   const handleCancelEdit = () => {
-    setEditingLog(null); // Cancel editing
+    setEditingLog(null);
   };
 
   const handleExportToExcel = () => {
@@ -53,7 +53,6 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-center mb-4">Tvoji zapisi odsotnosti</h2>
 
-      {/* Export button */}
       <div className="text-center mb-4">
         <button
           onClick={handleExportToExcel}
@@ -77,30 +76,32 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
             >
               {isEditing ? (
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm text-gray-600">Datum:</label>
-                    <input
-                      type="date"
-                      name="date"
-                      value={editedLog.date.split("T")[0]}
-                      onChange={handleEditChange}
-                      className="border p-2 rounded w-full"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-600">Vrsta odsotnosti:</label>
-                    <select
-                      name="absenceType"
-                      value={editedLog.absenceType}
-                      onChange={handleEditChange}
-                      className="border p-2 rounded w-full"
-                    >
-                      <option value="">Izberi vrsto</option>
-                      <option value="Bolniška">Bolniška</option>
-                      <option value="Dopust">Dopust</option>
-                      <option value="Neplačan dopust">Neplačan dopust</option>
-                      <option value="Varstvo otrok">Varstvo otrok</option>
-                    </select>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <label className="flex-1">
+                      <span className="text-sm text-gray-600">Datum:</span>
+                      <input
+                        type="date"
+                        name="date"
+                        value={editedLog.date.split("T")[0]}
+                        onChange={handleEditChange}
+                        className="border p-2 rounded w-full"
+                      />
+                    </label>
+                    <label className="flex-1">
+                      <span className="text-sm text-gray-600">Vrsta odsotnosti:</span>
+                      <select
+                        name="absenceType"
+                        value={editedLog.absenceType}
+                        onChange={handleEditChange}
+                        className="border p-2 rounded w-full"
+                      >
+                        <option value="">Izberi vrsto</option>
+                        <option value="Bolniška">Bolniška</option>
+                        <option value="Dopust">Dopust</option>
+                        <option value="Neplačan dopust">Neplačan dopust</option>
+                        <option value="Varstvo otrok">Varstvo otrok</option>
+                      </select>
+                    </label>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-600">Opis:</label>
@@ -112,7 +113,7 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
                       className="border p-2 rounded w-full"
                     />
                   </div>
-                  <div className="flex justify-end space-x-2">
+                  <div className="flex justify-end gap-2">
                     <button
                       onClick={handleCancelEdit}
                       className="px-4 py-2 bg-gray-500 text-white rounded-full text-sm hover:bg-gray-600 transition duration-300"
@@ -128,13 +129,13 @@ const AbsenceLogTable = ({ absenceLogs, onEdit, onDelete }) => {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
-                  <div>
+                <div className="flex flex-wrap gap-4 items-start md:items-center">
+                  <div className="flex-1 min-w-[200px]">
                     <span className="text-lg font-semibold">{formattedDate}</span>
                     <p className="text-sm text-gray-500">Vrsta: {log.absenceType}</p>
                     {log.description && <p className="text-sm text-gray-500">Opis: {log.description}</p>}
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex gap-2 flex-wrap">
                     <button
                       onClick={() => handleEditClick(log)}
                       className="px-4 py-1 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600 transition duration-300"

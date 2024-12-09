@@ -153,9 +153,9 @@ export default function LoginPage() {
                 onChange={(e) => setEmploymentType(e.target.value)}
                 required
               >
-                <MenuItem value="zaposlen">Zaposlen</MenuItem>
-                <MenuItem value="student">Študent</MenuItem>
-                <MenuItem value="freelancer">Freelancer</MenuItem>
+                <MenuItem value="Zaposlen">Zaposlen</MenuItem>
+                <MenuItem value="Študent">Študent</MenuItem>
+                <MenuItem value="Freelancer">Freelancer</MenuItem>
               </Select>
             </FormControl>
             <TextField

@@ -192,7 +192,7 @@ export default function Dashboard() {
       <Navbar />
       <div className="bg-gray-50">
         <div className="max-w-4xl mx-auto p-6 space-y-8">
-          <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Dobrodošli na profilu!</h1>
+          <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Dobrodošli</h1>
 
           <div className="flex justify-center gap-6 mb-6">
             <button

@@ -2,6 +2,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Helper function for API calls
 export const fetchAPI = async (endpoint, method = "GET", body = null) => {
+    console.log("API URL:", BASE_URL);
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const res = await fetch(`${BASE_URL}${endpoint}`, {

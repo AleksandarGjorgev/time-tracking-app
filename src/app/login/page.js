@@ -30,13 +30,6 @@ export default function LoginPage() {
   const [error, setError] = useState(null); // Napake
   const router = useRouter();
 
-  // Preverjanje, če je uporabnik že prijavljen (ob nalaganju strani)
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/'); // Preusmeri na nadzorno ploščo, če je uporabnik že prijavljen
-    }
-  }, [router]);
 
   // Ob prijavi ali registraciji
   const handleSubmit = async (e) => {

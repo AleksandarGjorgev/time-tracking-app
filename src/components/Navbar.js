@@ -1,51 +1,41 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+const Navbar = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Odstrani JWT token
+    router.push("/login"); // Preusmeri na prijavno stran
+  };
 
   return (
-    <nav className="bg-gray-800 text-white">
-      <div className="container mx-auto flex justify-between items-center p-4">
-        <div className="text-2xl font-bold">Time Tracker</div>
+    <nav className="bg-blue-600 text-white p-4 flex items-center justify-between shadow-md">
+      <div className="flex items-center space-x-6">
+        <h1
+          className="text-2xl font-bold cursor-pointer transition duration-300 ease-in-out hover:text-yellow-300"
+          onClick={() => router.push("/dashboard")}
+        >
+          TimeTracker
+        </h1>
+      </div>
+      <div className="flex items-center space-x-6">
         <button
-          className="block md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
+          onClick={() => router.push("/profile")}
+          className="text-white hover:text-yellow-300 transition duration-200 cursor-pointer"
         >
-          <div className="w-6 h-1 bg-white mb-1" />
-          <div className="w-6 h-1 bg-white mb-1" />
-          <div className="w-6 h-1 bg-white" />
+          Profil
         </button>
-        <ul
-          className={`${
-            isOpen ? 'block' : 'hidden'
-          } md:flex md:space-x-4 absolute md:relative bg-gray-800 md:bg-transparent w-full md:w-auto top-16 left-0 md:top-auto md:left-auto`}
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md transition duration-300 ease-in-out"
         >
-          <li>
-            <Link href="/" className="block py-2 px-4 hover:bg-gray-700">
-              Domov
-            </Link>
-          </li>
-          <li>
-            <Link href="/absence-types" className="block py-2 px-4 hover:bg-gray-700">
-              Vrste odsotnosti
-            </Link>
-          </li>
-          <li>
-            <Link href="/work-tracking" className="block py-2 px-4 hover:bg-gray-700">
-              Beleženje časa
-            </Link>
-          </li>
-          <li>
-            <Link href="/my-hours" className="block py-2 px-4 hover:bg-gray-700">
-              Moje ure
-            </Link>
-          </li>
-        </ul>
+          Odjava
+        </button>
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

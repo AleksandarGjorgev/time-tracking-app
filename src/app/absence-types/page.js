@@ -6,14 +6,18 @@ export default function AbsenceTypes() {
   const [absenceTypes, setAbsenceTypes] = useState([]);
   const [newAbsenceType, setNewAbsenceType] = useState('');
 
+  // Konstantna vrednost za apiUrl
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL + '/api/absencetypes';
+
   useEffect(() => {
-    fetch('/api/absence-types')
+    // Prvič naloži podatke
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setAbsenceTypes(data));
-  }, []);
+  }, []);  // Prazna odvisnost pomeni, da bo useEffect izveden samo enkrat ob nalaganju
 
   const addAbsenceType = () => {
-    fetch('/api/absence-types', {
+    fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newAbsenceType }),
@@ -24,7 +28,7 @@ export default function AbsenceTypes() {
   };
 
   const deleteAbsenceType = (id) => {
-    fetch(`/api/absence-types?id=${id}`, { method: 'DELETE' })
+    fetch(`${apiUrl}?id=${id}`, { method: 'DELETE' })
       .then(() => setAbsenceTypes(absenceTypes.filter((type) => type.id !== id)));
   };
 

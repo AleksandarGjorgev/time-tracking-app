@@ -116,22 +116,25 @@ export default function Dashboard() {
   
 
   const handleAddWorkLog = async () => {
-    if (!newWorkLog.startTime || !newWorkLog.endTime || !newWorkLog.breakStart || !newWorkLog.breakEnd || !newWorkLog.date) {
-      alert("Please fill in all the required fields.");
+    if (!newWorkLog.startTime || !newWorkLog.endTime || !newWorkLog.date || !newWorkLog.breakStart || !newWorkLog.breakEnd) {
+      setErrors({
+        startTime: !newWorkLog.startTime,
+        endTime: !newWorkLog.endTime,
+        breakStart: !newWorkLog.breakStart,
+        breakEnd: !newWorkLog.breakEnd,
+        date: !newWorkLog.date,
+      });
       return;
     }
+    setErrors({});
     try {
-      const workLogWithUserId = { ...newWorkLog, userId };
-      const response = await createWorkLog(workLogWithUserId);
+      const response = await createWorkLog({ ...newWorkLog, userId });
       if (response.success) {
-        alert("Work log successfully added!");
         fetchWorkLogs();
         setNewWorkLog({ startTime: "", endTime: "", breakStart: "", breakEnd: "", date: "" });
-      } else {
-        alert(`Failed to add work log: ${response.message || "Unknown error"}`);
       }
     } catch (error) {
-      alert(`Error adding work log: ${error.message}`);
+      console.error("Napaka pri dodajanju delovnega zapisa:", error.message);
     }
   };
 
@@ -205,6 +208,7 @@ export default function Dashboard() {
                 newWorkLog={newWorkLog}
                 setNewWorkLog={setNewWorkLog}
                 handleAddWorkLog={handleAddWorkLog}
+                errors={errors}
               />
               <WorkLogTable
                 workLogs={workLogs}

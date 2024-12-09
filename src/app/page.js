@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Uporabimo za preusmeritev\
 import Navbar from "@/components/Navbar";
 import AbsenceForm from "@/components/AbsenceForm";
 import AbsenceLogTable from "@/components/AbsenceLogTable";
@@ -35,6 +36,18 @@ export default function Dashboard() {
   const [mode, setMode] = useState("work");
   const [errors, setErrors] = useState({});
   const [userId, setUserId] = useState(null);
+  const router = useRouter(); // Inicializacija routerja
+
+  useEffect(() => {
+    const checkToken = () => {
+      const token = localStorage.getItem("jwt"); // Preveri, če obstaja JWT v localStorage
+      if (!token) {
+        router.push("/login"); // Preusmeri na /login, če ni žetona
+      }
+    };
+
+    checkToken(); // Kliči funkcijo ob zagonu komponente
+  }, [router]);
 
   useEffect(() => {
     fetchUserData();

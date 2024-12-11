@@ -92,7 +92,9 @@ export default function Dashboard() {
       const breakStartTime = new Date(`1970-01-01T${breakStart}`);
       const breakEndTime = new Date(`1970-01-01T${breakEnd}`);
       const breakDuration = (breakEndTime - breakStartTime) / (1000 * 60 * 60);
-      workHours -= breakDuration;
+      if(breakDuration > 1){
+        workHours -= breakDuration - 1;
+      }
     }
   
     return `${Math.max(0, workHours).toFixed(2)} h`; // Ensure non-negative value
